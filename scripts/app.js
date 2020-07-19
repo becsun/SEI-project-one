@@ -10,8 +10,8 @@ function init() {
   let width = 10
   const numberOfCells = width * width
   //position of the colour tube
-  let tube = 94
-  let clients = null
+  let tube = 90
+  let clientsStart = 0
   // make the grid
   function startGame() {
     for (let i = 0; i < numberOfCells; i++) {
@@ -61,8 +61,20 @@ function init() {
     //   clients[i] = clients[i] + 1 
     //  }
 
-    // setInterval( clientAttacks(), 3000)
+    //***********timer function is below**************
+    // const timer setInterval( clientAttacks(), 3000)
 
+    //?function to stop time is below//
+    //clearInterval(timer)
+
+    function updateScore(){
+
+    }
+
+
+    function highestScore(){
+
+    }
 
 
 
@@ -78,13 +90,13 @@ function init() {
     switch (e.keyCode) {
       //RIGHT
       case 39:
-        if (tube < 99) {
+        if (tube % width < width -1) {
           tube++
         }
         break
-        //LEFT
+        LEFT
       case 37:
-        if (tube > 90) {
+        if (tube % width  !==0 ) {
           tube--
         }
         break
