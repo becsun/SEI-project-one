@@ -37,46 +37,59 @@ function init() {
     //testing the layout
 
     // move clients
-    clientsAttack()
+    //clientsAttack()
 
-    function clientsAttack() { 
+    function clientsAttack() {
       console.log(clients[0])
+      //boolean to check if clients at left or right edge
       const leftEdge = clients[0] % width === 0
       const rightEdge = clients[clients.length - 1] % width === width - 1
-      if((leftEdge && direction === -1) || (rightEdge && direction === 1)){
-        direction = width
-      } else if (direction === width) {
-      if (leftEdge === true){
-         direction = 1
+      //condition if clients touched the edge of the grid, therefor move down
+      if ((leftEdge && direction === -1) || (rightEdge && direction === 1)) {
+        // to move down, set direction equals to width
+        direction = width 
+      } 
+      // if above is false, then code below which is
+      // means direction is equal to width, therefor needs to be change to move right or left  
+      else if (direction === width) {
+        // if clients are on the leftedge, move right, means direction +1
+        if (leftEdge === true) {
+          // move right
+          direction = 1
+        } 
+        //move left
+        else direction = -1
       }
-      else direction = -1
-      }
+
+      // remove fire from the cells
       for (let i = 0; i <= clients.length - 1; i++) {
         cells[clients[i]].classList.remove('fire')
       }
+      // add direction to clients to make them move
       for (let i = 0; i <= clients.length - 1; i++) {
         clients[i] += direction
       }
+      // add fire to cells
       for (let i = 0; i <= clients.length - 1; i++) {
         cells[clients[i]].classList.add('fire')
-        }
-    
+      }
+
 
     }
 
 
     //***********timer function is below**************
-    // const timer setInterval( clientAttacks(), 3000)
+    var timerid = setInterval(clientsAttack, 300)
 
     //?function to stop time is below//
     //clearInterval(timer)
 
-    function updateScore(){
+    function updateScore() {
 
     }
 
 
-    function highestScore(){
+    function highestScore() {
 
     }
 
@@ -94,13 +107,13 @@ function init() {
     switch (e.keyCode) {
       //RIGHT
       case 39:
-        if (tube % width < width -1) {
+        if (tube % width < width - 1) {
           tube++
         }
         break
         LEFT
       case 37:
-        if (tube % width  !==0 ) {
+        if (tube % width !== 0) {
           tube--
         }
         break
