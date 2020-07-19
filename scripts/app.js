@@ -12,6 +12,7 @@ function init() {
   //position of the colour tube
   let tube = 90
   let clientsStart = 0
+  let direction = 1
   // make the grid
   function startGame() {
     for (let i = 0; i < numberOfCells; i++) {
@@ -38,28 +39,31 @@ function init() {
     // move clients
     clientsAttack()
 
-    function clientsAttack() {
-      clients.forEach(client => {
-        cells[client].classList.remove('fire')
-        console.log(cells[client])
-      })
-      console.log(clients.length)
-      const x = cells[clients] % width
-      console.log(x)
-      const y = Math.floor(cells[clients] / width)
+    function clientsAttack() { 
+      console.log(clients[0])
+      const leftEdge = clients[0] % width === 0
+      const rightEdge = clients[clients.length - 1] % width === width - 1
+      if((leftEdge && direction === -1) || (rightEdge && direction === 1)){
+        direction = width
+      } else if (direction === width) {
+      if (leftEdge === true){
+         direction = 1
+      }
+      else direction = -1
+      }
+      for (let i = 0; i <= clients.length - 1; i++) {
+        cells[clients[i]].classList.remove('fire')
+      }
+      for (let i = 0; i <= clients.length - 1; i++) {
+        clients[i] += direction
+      }
+      for (let i = 0; i <= clients.length - 1; i++) {
+        cells[clients[i]].classList.add('fire')
+        }
+    
+
     }
 
-
-    clients.forEach(client => {
-      cells[client].classList.add('fire')
-
-    })
-    // for (let client in clients){
-    //   cells[client].classList.remove('fire')
-    // }
-    // for (let i = 0; i < 10; clients.length){
-    //   clients[i] = clients[i] + 1 
-    //  }
 
     //***********timer function is below**************
     // const timer setInterval( clientAttacks(), 3000)
