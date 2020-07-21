@@ -44,3 +44,6 @@ header{
   background-size: contain;
 
 }
+.grid div.weapon{
+  background-color: red;
+}

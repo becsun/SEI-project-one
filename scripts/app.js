@@ -5,7 +5,8 @@ function init() {
   const highestScore = document.querySelector('#highest-display')
 
   const cells = []
-
+  const squiggles = []
+  const tears = []
 
   let width = 10
   const numberOfCells = width * width
@@ -24,6 +25,8 @@ function init() {
     }
 
     cells[tube].classList.add('poo')
+
+    //bullets
 
 
 
@@ -47,8 +50,8 @@ function init() {
       //condition if clients touched the edge of the grid, therefor move down
       if ((leftEdge && direction === -1) || (rightEdge && direction === 1)) {
         // to move down, set direction equals to width
-        direction = width 
-      } 
+        direction = width
+      }
       // if above is false, then code below which is
       // means direction is equal to width, therefor needs to be change to move right or left  
       else if (direction === width) {
@@ -56,10 +59,13 @@ function init() {
         if (leftEdge === true) {
           // move right
           direction = 1
-        } 
+        }
         //move left
         else direction = -1
       }
+
+
+
 
       // remove fire from the cells
       for (let i = 0; i <= clients.length - 1; i++) {
@@ -75,11 +81,65 @@ function init() {
       }
 
 
+      clients.some(client => {
+        if (client >= (width * 9)) {
+          clearInterval(timerID)
+          clients.forEach(client => {
+            cells[client].classList.remove('fire')
+          })
+        }
+      })
+
+
+
+    }
+    // to b b       
+    function fireWeapon(e) {
+      if (e.keyCode === 32) {
+        squiggles.push(tube)
+        console.log(tube)
+        // basically directin equals 15
+        let fire = cells[tube].classList.add('weapon')
+      }
     }
 
 
+    // to get rid of the bullet when it collides
+    function bulletMoving() {
+      bulletDirection = width * -1
+      for (let i = 0; i <= squiggles.length; i++) {
+        for (let j = 0; j<= clients.length; j++ ){
+          if (squiggles[i] === cells[clients[j]]) {
+            cells[squiggles[i]].classList.remove('weapon')
+            cells[clients[j]].classList.remove('fire')
+            squiggles.pop(clients[j])
+          }
+        }
+      }
+    }
+      // Code to move bullets up in a column
+      // remove fire from the cells
+      for (let i = 0; i <= squiggles.length - 1; i++) {
+        cells[squiggles[i]].classList.remove('weapon')
+      }
+      // add direction to clients to make them move
+      for (let i = 0; i <= squiggles.length - 1; i++) {
+        squiggles[i] += bulletDirection
+      }
+      // add fire to cells
+      for (let i = 0; i <= squiggles.length - 1; i++) {
+        cells[squiggles[i]].classList.add('weapon')
+      }
+
+    
+     
+
+    window.addEventListener('keydown', fireWeapon)
+
+    let fireInterval = setInterval(bulletMoving, 5000)
+
     //***********timer function is below**************
-    var timerid = setInterval(clientsAttack, 300)
+    let timerID = setInterval(clientsAttack, 200)
 
     //?function to stop time is below//
     //clearInterval(timer)
@@ -111,7 +171,7 @@ function init() {
           tube++
         }
         break
-        LEFT
+        //LEFT
       case 37:
         if (tube % width !== 0) {
           tube--
@@ -121,6 +181,9 @@ function init() {
         break
     }
     cells[tube].classList.add('poo')
+
+
+    
 
   }
   startGame()
