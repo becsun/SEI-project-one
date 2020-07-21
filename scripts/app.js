@@ -90,7 +90,7 @@ function init() {
 
 
     // }
-    // to b b       
+    // to fire bullets to take out the clients     
     function fireWeapon(e) {
       if (e.keyCode === 32) {
         let bullet = tube - width
@@ -102,8 +102,9 @@ function init() {
           if (bullet < 0){
             clearInterval(shootingBullet)
           } else if (cells[bullet].classList.contains('fire')){
-            console.log('hit enemy')
-          } else{
+            cells[bullet].classList.remove('fire')
+            clearInterval(shootingBullet)
+          } else {
             cells[bullet].classList.add('weapon')
           }   
         }, 100)
