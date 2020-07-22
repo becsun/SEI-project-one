@@ -1,4 +1,3 @@
-
 function init() {
   // const startButton = document.querySelector('#start')
   // startButton.addEventListener("click", startGame)
@@ -91,6 +90,41 @@ function init() {
 
 
     }
+
+    clientFire()
+    function clientFire() {
+      // let clientShooter = clients
+      const availiableShooters = clients.slice(clients.length - 6)
+      let clientShooter = availiableShooters[Math.floor(Math.random() * availiableShooters.length)]
+      cells[clientShooter].classList.add('tears')
+      const clientShootingTimer = setInterval(() => {   
+        cells[clientShooter].classList.remove('tears')
+        clientShooter = clientShooter + width
+        cells[clientShooter].classList.add('tears')
+               console.log(clientShooter)
+        if (cells[clientShooter] .classList.contains('poo')){
+          clearInterval(clientShootingTimer)
+          cells[clientShooter].classList.remove('poo')
+          console.log('help')
+         
+          console.log(clientShooter > 100)
+          cells[clientShooter].classList.remove('tears')
+         } else if (clientShooter > 100) {
+       
+          cells[clientShooter].classList.remove('tears')
+        //  console.log(cells[clientShooter])
+        // } else if (cells[bullet].classList.contains('fire')){
+        //     cells[bullet].classList.remove('fire')
+        // }
+        //   cells[clientShooter].classList.remove('tears')
+        // clearInterval(clientShootingTimer)
+        
+        }
+      
+      }, 1000)
+    }
+
+
     // to fire bullets to take out the clients     
     function fireWeapon(e) {
       if (e.keyCode === 32) {
@@ -111,7 +145,7 @@ function init() {
           } else {
             cells[bullet].classList.add('weapon')
           }   
-          if (clients === 0){
+          if (clients.length === 0){
             console.log('game over')
           }
         }, 100)
@@ -131,10 +165,7 @@ function init() {
 
  
 
-    function updateScore() {
-
-    }
-
+ 
 
     function highestScore() {
 

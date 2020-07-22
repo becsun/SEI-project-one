@@ -8,6 +8,11 @@ body {
 header{
   position: absolute;
 }
+
+h1{
+padding-left: 100px
+}
+
 .grid-wrapper {
   margin-top: -70px;
   display: flex;
@@ -40,7 +45,7 @@ header{
   
 }
 .grid div.fire{
-  background-image: url('../images/fire.png');
+  background-image: url('../images/Client.png');
   background-repeat: no-repeat;
   background-size: contain;
 
@@ -66,7 +71,7 @@ header{
 }
 .container-1{
   position: absolute;
-  display: flex;
+  display: none;
   justify-self: center;
   margin-top: 20px;
   align-content: center;
@@ -79,5 +84,13 @@ header{
 
 }
 
+.tears{
+  background-color: blue;
+}
   
+
+
+
+
+
 
