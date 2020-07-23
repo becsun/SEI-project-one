@@ -4,19 +4,22 @@
 body {
   height: 100vh;
   margin: 0;
-  background-color: tomato;
+  background-image: url("https://thumbs.dreamstime.com/b/background-dribble-green-slime-flowing-sticky-liquid-melted-paint-drips-flowing-vector-halloween-illustration-toxic-78896741.jpg");
 }
 header{
   position: absolute;
 }
 
 h1{
-padding-left:70px;
+padding-left:30px;
 font-family: 'Rowdies', cursive;
+padding-right: 40px;
 }
 h2{
   font-family: 'Rowdies', cursive;
-  font-size: 30px;
+  font-size: 50px;
+  align-content: center;
+ 
 }
 .grid-wrapper {
   margin-top: -70px;
@@ -40,16 +43,18 @@ h2{
 }
 
 .grid div {
-  border: 1px solid lightgrey;
+  /* border: 1px solid lightgrey; */
   flex-grow: 1;
   height: 10%;
   width: 10%;
 
 }
 .grid div.poo {
-  background-image: url('../images/poo.png');
+  background-image: url('../images/Hand2.png');
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
+  background-size: 70%;
   
 }
 .grid div.fire{
@@ -60,7 +65,9 @@ h2{
 }
 .grid div.weapon{
 
-  background-color: red;
+  background-image: url('../images/Spurt@0.75x.png');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .money{
   background-image: url('../images/money.png');
@@ -108,15 +115,21 @@ header{
 }
 
 #money-display{
-
+  background-image: url('../images/Cash.png');
 }
 
 .tears{
-  background-image: url('../images/Tear-Two.png');
+  background-image: url('../images/Tear-Three.png');
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: center;
 }
 
 .cash{
   background-image: url('../images/Cash.png');
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: center;
 }
   
 #start{
@@ -134,6 +147,7 @@ header{
   margin-left: 450px;
  text-align: center;
  padding-top: 0px;
+ color :yellow;
 
   /* animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
   transform: translate3d(0, 0, 0);

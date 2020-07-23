@@ -8,6 +8,7 @@ function init() {
   const gameOver = document.querySelector('.game-over')
   const restart = document.querySelector('.restart')
   const heading = document.querySelector('.heading')
+  const backgroundColor = document.querySelector('.container-1')
 
 
   //local storage for highest score
@@ -33,12 +34,13 @@ function init() {
     startButton.style.display = 'none'
     blurb.style.display = 'none'
     heading.style.display = 'none'
+    backgroundColor.style.backgroundColor = 'black'
 
     for (let i = 0; i < numberOfCells; i++) {
       const cell = document.createElement('div')
       cells.push(cell)
       //maybe delete the i later
-      cell.innerHTML = i
+      // cell.innerHTML = i
       grid.appendChild(cell)
     }
 
@@ -94,6 +96,7 @@ function init() {
       // remove fire from the cells
       for (let i = 0; i <= clients.length - 1; i++) {
         cells[clients[i]].classList.remove('fire')
+       
       }
       // add direction to clients to make them move
       for (let i = 0; i <= clients.length - 1; i++) {
@@ -215,10 +218,12 @@ function init() {
               highestScore = money
               localStorage.setItem(saveKeyStore, highestScore)
             }
-
-
-            cells[bullet].classList.remove('fire')
-
+            ////???? make the money disappear
+            cells[bullet].classList.add('cash')
+            cells[bullet].classList.remove('fire') 
+           
+         
+           
             clients = clients.filter(client => {
               return client !== bullet
             })
@@ -242,7 +247,7 @@ function init() {
 
 
     //***********timer function is below**************
-    const timerID = setInterval(clientsAttack, 200)
+    const timerID = setInterval(clientsAttack, 1000)
 
 
 
