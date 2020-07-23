@@ -5,6 +5,8 @@ function init() {
   const grid = document.querySelector('.grid')
   const moneyMade = document.querySelector('#money-display')
   const highScore = document.querySelector('#highest-display')
+  const gameOver = document.querySelector('.game-over')
+
   //local storage for highest score
   const saveKeyStore = 'highScore'
   let highestScore = localStorage.getItem(saveKeyStore)
@@ -17,6 +19,7 @@ function init() {
   const clientsStart = 0
   let direction = 1
   let money = 1000
+
 
 
 
@@ -33,7 +36,7 @@ function init() {
       const cell = document.createElement('div')
       cells.push(cell)
       //maybe delete the i later
-      // cell.innerHTML = i
+      cell.innerHTML = i
       grid.appendChild(cell)
     }
 
@@ -98,11 +101,18 @@ function init() {
         }
       })
 
-         clientFire()
+      
+      clientFire()
+
+
 
     }
 
- 
+
+
+
+
+
 
     function clientFire() {
       // let clientShooter = clients
@@ -114,8 +124,9 @@ function init() {
       const clientShootingTimer = setInterval(() => {
         cells[clientShooter].classList.remove('tears')
         clientShooter = clientShooter + width
-        if (clientShooter > 100) {
-          console.log('here')
+        if (clientShooter >= 100) {
+
+          console.log('game over')
           return clearInterval(clientShootingTimer)
         }
         cells[clientShooter].classList.add('tears')
@@ -125,6 +136,9 @@ function init() {
           clearInterval(clientShootingTimer)
           console.log(clientShooter)
           cells[clientShooter].classList.remove('poo')
+          moneyMade.innerHTML = money
+          money -= 1000
+         
           ///???????? dont know why it wont stop
 
         }
@@ -143,14 +157,24 @@ function init() {
     //  clearInterval(clientShootingTimer)
 
 
+    const squirt = document.querySelector('.squirt')
 
-
+    function playSound(e) {
+      if (e.keyCode === 32) {
+        squirt.src = '../audio/splooge.wav'
+        squirt.play()
+      }
+    }
+    squirt.addEventListener('keydown', playSound)
+    // playSound()
     // to fire bullets to take out the clients     
     function fireWeapon(e) {
       if (e.keyCode === 32) {
+   
         let bullet = tube
         //  - width
         let client
+
         cells[bullet].classList.add('weapon')
         let shootingBullet = setInterval(() => {
           cells[bullet].classList.remove('weapon')
