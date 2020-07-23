@@ -18,6 +18,7 @@ padding-left: 100px
   display: flex;
   justify-content: center;
   position: relative;
+
 }
 
 .grid {
@@ -30,13 +31,15 @@ padding-left: 100px
   height: 650px;
   width: 1000px;
   margin-top: 110px;
+  
 }
 
 .grid div {
-  /* border: 1px solid lightgrey; */
+  border: 1px solid lightgrey;
   flex-grow: 1;
   height: 10%;
   width: 10%;
+
 }
 .grid div.poo {
   background-image: url('../images/poo.png');
@@ -51,7 +54,11 @@ padding-left: 100px
 
 }
 .grid div.weapon{
+
   background-color: red;
+}
+.money{
+  background-image: url('../images/money.png');
 }
 
 header{
@@ -68,16 +75,32 @@ header{
   display: flex;
   flex-direction: column;
   align-items: center;
+  
+}
+h3{
+  font-family: 'Rowdies', cursive;
+  margin-left: 100px;
+  margin-right: 100px;
+  justify-content: space-evenly;
+  font-size: 25px;
 }
 .container-1{
+  /* background-image: url('https://image.freepik.com/free-vector/massage-parlor-illustration-animation-background_77628-14.jpg'); */
+  /* background-size: contain; */
   position: absolute;
-  display: none;
+  /* display: none; */
   justify-self: center;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   align-content: center;
   text-align: center;
   flex-direction: column;
-  margin-top: 100px;
+  height: 90%;
+  margin-top: 60px;
+  margin-right: 100px;
+  background-repeat: no-repeat;
+  width: 1000px;
+ background-color: yellow;
+ margin-left: -35px;
 }
 
 #money-display{
@@ -85,12 +108,20 @@ header{
 }
 
 .tears{
-  background-color: blue;
+  background-image: url('../images/Tear-Two.png');
 }
   
 
+.game-over{
 
+}
 
-
-
+#start{
+  position: absolute;
+  
+  left: 35%;
+  top: 80%;
+  font-size: 20px;
+  
+}
 

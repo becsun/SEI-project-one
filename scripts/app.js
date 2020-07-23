@@ -1,11 +1,13 @@
 function init() {
   // const startButton = document.querySelector('#start')
   // startButton.addEventListener("click", startGame)
-
+  const startButton = document.querySelector('#start')
   const grid = document.querySelector('.grid')
   const moneyMade = document.querySelector('#money-display')
-  const highestScore = document.querySelector('#highest-display')
-  
+  const highScore = document.querySelector('#highest-display')
+  //local storage for highest score
+  const saveKeyStore = 'highScore'
+  let highestScore = localStorage.getItem(saveKeyStore)
   const cells = []
   const width = 10
   const numberOfCells = width * width
@@ -14,6 +16,16 @@ function init() {
   let tube = 90
   const clientsStart = 0
   let direction = 1
+  let money = 1000
+
+
+
+  //  startButton.style.display = 'none'
+
+
+
+
+
   // make the grid
 
   function startGame() {
@@ -77,9 +89,8 @@ function init() {
         cells[clients[i]].classList.add('fire')
       }
 
-
       clients.some(client => {
-        if (client >= (width * 9)) {
+        if (client >= (width * 10)) {
           clearInterval(timerID)
           clients.forEach(client => {
             cells[client].classList.remove('fire')
@@ -87,95 +98,116 @@ function init() {
         }
       })
 
-
+         clientFire()
 
     }
 
-    clientFire()
+ 
+
     function clientFire() {
       // let clientShooter = clients
       const availiableShooters = clients.slice(clients.length - 6)
+
       let clientShooter = availiableShooters[Math.floor(Math.random() * availiableShooters.length)]
+      console.log(availiableShooters)
       cells[clientShooter].classList.add('tears')
-      const clientShootingTimer = setInterval(() => {   
+      const clientShootingTimer = setInterval(() => {
         cells[clientShooter].classList.remove('tears')
         clientShooter = clientShooter + width
-        cells[clientShooter].classList.add('tears')
-               console.log(clientShooter)
-        if (cells[clientShooter] .classList.contains('poo')){
-          clearInterval(clientShootingTimer)
-          cells[clientShooter].classList.remove('poo')
-          console.log('help')
-         
-          console.log(clientShooter > 100)
-          cells[clientShooter].classList.remove('tears')
-         } else if (clientShooter > 100) {
-       
-          cells[clientShooter].classList.remove('tears')
-        //  console.log(cells[clientShooter])
-        // } else if (cells[bullet].classList.contains('fire')){
-        //     cells[bullet].classList.remove('fire')
-        // }
-        //   cells[clientShooter].classList.remove('tears')
-        // clearInterval(clientShootingTimer)
-        
+        if (clientShooter > 100) {
+          console.log('here')
+          return clearInterval(clientShootingTimer)
         }
-      
-      }, 1000)
+        cells[clientShooter].classList.add('tears')
+        console.log(clientShooter)
+        if (cells[clientShooter].classList.contains('poo')) {
+
+          clearInterval(clientShootingTimer)
+          console.log(clientShooter)
+          cells[clientShooter].classList.remove('poo')
+          ///???????? dont know why it wont stop
+
+        }
+      }, 500)
+
     }
+
+    //     cells[clientShooter].classList.remove('poo')
+    //     console.log('help')
+
+    //     console.log(clientShooter > 100)
+    //     cells[clientShooter].classList.remove('tears')
+    //    } else if (clientShooter >= 100) {
+
+    //     cells[clientShooter].classList.remove('tears')
+    //  clearInterval(clientShootingTimer)
+
+
 
 
     // to fire bullets to take out the clients     
     function fireWeapon(e) {
       if (e.keyCode === 32) {
-        let bullet = tube - width
-          let client
+        let bullet = tube
+        //  - width
+        let client
         cells[bullet].classList.add('weapon')
-        let shootingBullet = setInterval(() => { 
+        let shootingBullet = setInterval(() => {
           cells[bullet].classList.remove('weapon')
           bullet = bullet - width
-          if (bullet < 0){
+          if (bullet < 0) {
             clearInterval(shootingBullet)
-          } else if (cells[bullet].classList.contains('fire')){
+          } else if (cells[bullet].classList.contains('fire')) {
+            //add to score
+            moneyMade.innerHTML = money
+            money += 1000
+
+            //check high score
+            highScore.innerHTML = highestScore
+            if (money > highestScore) {
+              highestScore = money
+              localStorage.setItem(saveKeyStore, highestScore)
+            }
+
+
             cells[bullet].classList.remove('fire')
-            clients = clients.filter(client =>{
+
+            clients = clients.filter(client => {
               return client !== bullet
             })
             clearInterval(shootingBullet)
           } else {
             cells[bullet].classList.add('weapon')
-          }   
-          if (clients.length === 0){
+          }
+          if (clients.length === 0) {
             console.log('game over')
           }
         }, 100)
-       
+
       }
-  
-       
-      
+
+
+
     }
-  
+
 
     window.addEventListener('keyup', fireWeapon)
 
- 
+
     //***********timer function is below**************
     const timerID = setInterval(clientsAttack, 1000)
 
- 
 
- 
 
-    function highestScore() {
 
-    }
+
+
   }
   window.addEventListener('keydown', handleKeyDown)
 
 
   function handleKeyDown(e) {
-   
+
     cells[tube].classList.remove('poo')
     switch (e.keyCode) {
       //RIGHT
@@ -199,7 +231,7 @@ function init() {
 
 
   }
-  
+
   startGame()
 
 }
