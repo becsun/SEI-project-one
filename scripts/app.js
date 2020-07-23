@@ -1,11 +1,14 @@
 function init() {
-  // const startButton = document.querySelector('#start')
-  // startButton.addEventListener("click", startGame)
+
   const startButton = document.querySelector('#start')
+  const blurb = document.querySelector('.blurb')
   const grid = document.querySelector('.grid')
   const moneyMade = document.querySelector('#money-display')
   const highScore = document.querySelector('#highest-display')
   const gameOver = document.querySelector('.game-over')
+  const restart = document.querySelector('.restart')
+  const heading = document.querySelector('.heading')
+
 
   //local storage for highest score
   const saveKeyStore = 'highScore'
@@ -16,14 +19,9 @@ function init() {
   //position of the colour tube
 
   let tube = 90
-  const clientsStart = 0
+  // const clientsStart = 0
   let direction = 1
   let money = 1000
-
-
-
-
-  //  startButton.style.display = 'none'
 
 
 
@@ -32,6 +30,10 @@ function init() {
   // make the grid
 
   function startGame() {
+    startButton.style.display = 'none'
+    blurb.style.display = 'none'
+    heading.style.display = 'none'
+
     for (let i = 0; i < numberOfCells; i++) {
       const cell = document.createElement('div')
       cells.push(cell)
@@ -57,6 +59,16 @@ function init() {
 
     // move clients
     clientsAttack()
+    
+    function restart() {
+
+    }
+
+    function gameOverPage(){
+      grid.style.display = 'none'
+      gameOver.style.display = 'inline'
+    }
+
 
     function clientsAttack() {
       //boolean to check if clients at left or right edge
@@ -72,7 +84,7 @@ function init() {
       else if (direction === width) {
         // if clients are on the leftedge, move right, means direction +1
         if (leftEdge === true) {
-          // move right
+          // move right 
           direction = 1
         }
         //move left
@@ -94,14 +106,19 @@ function init() {
 
       clients.some(client => {
         if (client >= (width * 10)) {
+     
           clearInterval(timerID)
           clients.forEach(client => {
             cells[client].classList.remove('fire')
+     
+            // return clearInterval(timerID)
+          
           })
+          gameOver.style.display = 'block'
         }
       })
 
-      
+
       clientFire()
 
 
@@ -113,8 +130,8 @@ function init() {
 
 
 
-
     function clientFire() {
+
       // let clientShooter = clients
       const availiableShooters = clients.slice(clients.length - 6)
 
@@ -122,23 +139,26 @@ function init() {
       console.log(availiableShooters)
       cells[clientShooter].classList.add('tears')
       const clientShootingTimer = setInterval(() => {
+
         cells[clientShooter].classList.remove('tears')
         clientShooter = clientShooter + width
         if (clientShooter >= 100) {
-
-          console.log('game over')
+         
+          //??? gameOver.style.display = 'block'
           return clearInterval(clientShootingTimer)
+          
         }
         cells[clientShooter].classList.add('tears')
+        // womanScream()
         console.log(clientShooter)
         if (cells[clientShooter].classList.contains('poo')) {
-
+          gameOver.style.display = 'block'
           clearInterval(clientShootingTimer)
           console.log(clientShooter)
           cells[clientShooter].classList.remove('poo')
           moneyMade.innerHTML = money
           money -= 1000
-         
+
           ///???????? dont know why it wont stop
 
         }
@@ -146,31 +166,33 @@ function init() {
 
     }
 
-    //     cells[clientShooter].classList.remove('poo')
-    //     console.log('help')
-
-    //     console.log(clientShooter > 100)
-    //     cells[clientShooter].classList.remove('tears')
-    //    } else if (clientShooter >= 100) {
-
-    //     cells[clientShooter].classList.remove('tears')
-    //  clearInterval(clientShootingTimer)
 
 
-    const squirt = document.querySelector('.squirt')
 
-    function playSound(e) {
-      if (e.keyCode === 32) {
-        squirt.src = '../audio/splooge.wav'
-        squirt.play()
-      }
+    const audio = document.querySelector('#myAudio')
+    // const womanScream = document.querySelector('#myAudio')
+
+
+    function playSound() {
+      audio.src = './audio/splooge.wav'
+      audio.play()
     }
-    squirt.addEventListener('keydown', playSound)
+
+    function womanScream() {
+      audio.src = './audio/womanScream.mp3'
+      audio.play()
+    }
+
+    function cashTill() {
+      audio.src = './audio/cashSound.mp3'
+      audio.play()
+    }
+    audio.addEventListener('keydown', playSound)
     // playSound()
     // to fire bullets to take out the clients     
     function fireWeapon(e) {
       if (e.keyCode === 32) {
-   
+        playSound()
         let bullet = tube
         //  - width
         let client
@@ -183,6 +205,7 @@ function init() {
             clearInterval(shootingBullet)
           } else if (cells[bullet].classList.contains('fire')) {
             //add to score
+            cashTill()
             moneyMade.innerHTML = money
             money += 1000
 
@@ -219,7 +242,7 @@ function init() {
 
 
     //***********timer function is below**************
-    const timerID = setInterval(clientsAttack, 1000)
+    const timerID = setInterval(clientsAttack, 200)
 
 
 
@@ -256,7 +279,8 @@ function init() {
 
   }
 
-  startGame()
 
+
+  startButton.addEventListener('click', startGame)
 }
 window.addEventListener('DOMContentLoaded', init)
