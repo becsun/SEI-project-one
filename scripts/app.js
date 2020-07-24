@@ -167,9 +167,9 @@ function init() {
       
         console.log(clientShooter)
         if (cells[clientShooter].classList.contains('poo')) {
-
-          cells[clientShooter].classList.add('blownup')
           womanScream()
+          cells[clientShooter].classList.add('blownup')
+ 
           gameOverResult()
          
 
@@ -178,7 +178,7 @@ function init() {
           money -= 1000
       
         }
-      }, 100)
+      }, 50)
     }
 
  

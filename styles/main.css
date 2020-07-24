@@ -138,12 +138,7 @@ header{
   background-position: center;
 }
   
-#start{
-  position: absolute;
-  top: 90%;
-  font-size: 20px;
-  
-} 
+
 .game-over{
   display: none;
   position: absolute;
@@ -163,15 +158,23 @@ header{
   font-size: 20px;
   padding: 14px 40px;
   border-radius: 4px;
-  transition-duration: 6s;
+  transition-duration: 5s;
   cursor: pointer;
   border: 2px solid #555555;
+  position: absolute;
+  top: 85%;
+  font-size: 20px;
 
+
+}
+#start :hover{
+  background-color: #3e8e41;
+  color: white;
 }
 
 
 .restart{
- /* padding-top: -100px; */
+
  display: block;
  position: absolute;
  margin-bottom: 0px;
