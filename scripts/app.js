@@ -24,38 +24,45 @@ function init() {
   // const clientsStart = 0
   let direction = 1
   let money = 1000
+  let clientShootingTimer
+  let timerID
+
   // make the grid
 
 
-  function restartGame(){
-    gameOver.style.display = 'none'
-    restart.style.display = 'none'
-    startGame()
 
-  }
 
 
   function gameOverPage() {
     gameOver.style.display = 'block'
     restart.style.display = 'block'
-   
+    clearInterval(timerID)
+    clearInterval(clientShootingTimer)
+    cells.classList.remove('fire')
+    cells.classList.remove('tears')
   }
 
+  function restartGame(){
+    window.location.reload()
+
+  }
  
   function gamePlayingPage(){
     startButton.style.display = 'none'
     blurb.style.display = 'none'
     heading.style.display = 'none'
     backgroundColor.style.backgroundColor = 'black'
+    clearInterval(timerID)
+    clearInterval(clientShootingTimer)
   }
 
   function startGame() {
     gamePlayingPage()
+
     for (let i = 0; i < numberOfCells; i++) {
       const cell = document.createElement('div')
       cells.push(cell)
       //maybe delete the i later
-      // cell.innerHTML = i
       grid.appendChild(cell)
     }
     cells[tube].classList.add('poo')
@@ -66,13 +73,8 @@ function init() {
     const groupedClients = clients.forEach(client => {
       cells[client].classList.add('fire')
     })
-    //testing the layout
-    // move clients
-   
-
-
   
-
+   
     function findRightEdge(array, size) {
       rightEdgeValue = array[0]
       for (let i = 1; i <= size; i++) {
@@ -124,7 +126,7 @@ function init() {
           clients.forEach(client => {
             cells[client].classList.remove('fire')
             clearInterval(timerID)
-          
+            // gameOverPage()
           })
           // need to end the game
           gameOverPage()
@@ -140,7 +142,7 @@ function init() {
       let clientShooter = availiableShooters[Math.floor(Math.random() * availiableShooters.length)]
       console.log(availiableShooters)
       cells[clientShooter].classList.add('tears')
-      const clientShootingTimer = setInterval(() => {
+       clientShootingTimer = setInterval(() => {
         cells[clientShooter].classList.remove('tears')
         clientShooter = clientShooter + width
         if (clientShooter >= 100) {
@@ -152,12 +154,13 @@ function init() {
         console.log(clientShooter)
         if (cells[clientShooter].classList.contains('poo')) {
           
-          cells[clientShooter].classList.toggle('blownup')
+          cells[clientShooter].classList.add('blownup')
+          gameOverPage()
           //  cells[clientShooter].classList.add('poo')
           //  cells[clientShooter].classList.remove('blownup')
           // gameOver.style.display = 'block'
           // gameOverPage()
-          clearInterval(clientShootingTimer)
+          // clearInterval(clientShootingTimer)
           console.log(clientShooter)
           cells[clientShooter].classList.remove('poo')
           moneyMade.innerHTML = money
@@ -190,10 +193,10 @@ function init() {
     // playSound()
     // to fire bullets to take out the clients     
     function fireWeapon(e) {
-      if (e.keyCode === 32) {
+      if (e.keyCode === 70) {
+        e.preventDefault()
         playSound()
         let bullet = tube
-        //  - width
         let client
         cells[bullet].classList.add('weapon')
         let shootingBullet = setInterval(() => {
@@ -215,7 +218,10 @@ function init() {
 
 
             //////******** */
-            cells[bullet].classList.add('cash')
+            setTimeout(() => {
+              cells[bullet].classList.add('cash')
+            }, 50)
+           
             cells[bullet].classList.remove('fire')
 
 
@@ -229,7 +235,7 @@ function init() {
             cells[bullet].classList.add('weapon')
           }
           if (clients.length === 0) {
-            console.log('game over')
+          gameOver()
 
           }
 
@@ -238,8 +244,9 @@ function init() {
       }
     }
     window.addEventListener('keyup', fireWeapon)
+
     //***********timer function is below**************
-    const timerID = setInterval(clientsAttack, 1000)
+     timerID = setInterval(clientsAttack, 600)
   }
   window.addEventListener('keydown', handleKeyDown)
 

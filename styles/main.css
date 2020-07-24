@@ -157,7 +157,7 @@ header{
 
 }
 
-button {
+#start {
   background-color: yellowgreen;
   font-family: 'Rowdies', cursive;
   font-size: 20px;
@@ -169,12 +169,22 @@ button {
 
 }
 
-body .restart{
- padding-top: -100px;
+
+.restart{
+ /* padding-top: -100px; */
  display: block;
  position: absolute;
  margin-bottom: 0px;
+ background-color: yellowgreen;
+ font-family: 'Rowdies', cursive;
+ font-size: 20px;
+ padding: 14px 40px;
+ border-radius: 4px;
+ border: 2px solid #555555;
+ margin-left: 170px;
+ transform: rotate(45deg);
 }
+
 
 @keyframes slide {
   from {left: -300px;}
@@ -184,4 +194,6 @@ body .restart{
 .blownup {
 background-image: url(../images/Boom.png);
 background-repeat: no-repeat;
+background-size: 50%;
+background-position: center;
 }
