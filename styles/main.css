@@ -197,3 +197,15 @@ background-repeat: no-repeat;
 background-size: 50%;
 background-position: center;
 }
+
+.winner{
+  display: none;
+  position: absolute;
+  font-family: 'Rowdies', cursive;
+  font-size: 200px;
+  margin-top: -600px;
+  margin-left: 450px;
+ text-align: center;
+ padding-top: 0px;
+ color :yellow;
+}

@@ -8,11 +8,11 @@ function init() {
   const restart = document.querySelector('.restart')
   const heading = document.querySelector('.heading')
   const backgroundColor = document.querySelector('.container-1')
+  const result = document.querySelector('.winner')
+  const audio = document.querySelector('#myAudio')
 
 
-
-
-  restart.addEventListener('click',restartGame)
+  restart.addEventListener('click', restartGame)
   //local storage for highest score
   const saveKeyStore = 'highScore'
   let highestScore = localStorage.getItem(saveKeyStore)
@@ -26,28 +26,25 @@ function init() {
   let money = 1000
   let clientShootingTimer
   let timerID
+  let rightEdgeValue
 
   // make the grid
 
 
 
-
-
-  function gameOverPage() {
+  function gameOverResult() {
     gameOver.style.display = 'block'
     restart.style.display = 'block'
     clearInterval(timerID)
     clearInterval(clientShootingTimer)
-    cells.classList.remove('fire')
-    cells.classList.remove('tears')
   }
 
-  function restartGame(){
+  function restartGame() {
     window.location.reload()
 
   }
- 
-  function gamePlayingPage(){
+
+  function gamePlayingPage() {
     startButton.style.display = 'none'
     blurb.style.display = 'none'
     heading.style.display = 'none'
@@ -55,6 +52,14 @@ function init() {
     clearInterval(timerID)
     clearInterval(clientShootingTimer)
   }
+
+  function winner() {
+    result.style.display = 'block'
+    restart.style.display = 'block'
+    clearInterval(timerID)
+    clearInterval(clientShootingTimer)
+  }
+
 
   function startGame() {
     gamePlayingPage()
@@ -70,11 +75,11 @@ function init() {
     //making all the clients
     let clients = [0, 1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 14, 15, 16, 20, 21, 22, 23, 24, 25, 26, 30, 31, 32, 33, 34, 35, 36, 40, 41, 42, 43, 44, 45, 46]
     console.log(clients)
-    const groupedClients = clients.forEach(client => {
+    clients.forEach(client => {
       cells[client].classList.add('fire')
     })
-  
-   
+
+
     function findRightEdge(array, size) {
       rightEdgeValue = array[0]
       for (let i = 1; i <= size; i++) {
@@ -87,8 +92,9 @@ function init() {
       return rightEdgeValue
     }
 
- 
+
     function clientsAttack() {
+
       //boolean to check if clients at left or right edge
       const leftEdge = clients[0] % width === 0
       const rightEdge = findRightEdge(clients, 6) % width === width - 1
@@ -96,6 +102,7 @@ function init() {
       if ((leftEdge && direction === -1) || (rightEdge && direction === 1)) {
         // to move down, set direction equals to width
         direction = width
+      // eslint-disable-next-line brace-style
       }
       // if above is false, then code below which is
       // means direction is equal to width, therefor needs to be change to move right or left  
@@ -119,78 +126,78 @@ function init() {
       // add fire to cells
       for (let i = 0; i <= clients.length - 1; i++) {
         cells[clients[i]].classList.add('fire')
-        
+
       }
       clients.some(client => {
         if (client >= (width * 10)) {
+          gameOverResult()
+          clearInterval(timerID)
           clients.forEach(client => {
             cells[client].classList.remove('fire')
+
             clearInterval(timerID)
-            // gameOverPage()
+
           })
           // need to end the game
-          gameOverPage()
+          gameOverResult()
+          clearInterval(timerID)
         }
 
       })
+      //for the clients to shoot
       clientFire()
+
     }
- 
+
+
     function clientFire() {
       // let clientShooter = clients
       const availiableShooters = clients.slice(clients.length - 6)
       let clientShooter = availiableShooters[Math.floor(Math.random() * availiableShooters.length)]
       console.log(availiableShooters)
       cells[clientShooter].classList.add('tears')
-       clientShootingTimer = setInterval(() => {
+      clientShootingTimer = setInterval(() => {
         cells[clientShooter].classList.remove('tears')
         clientShooter = clientShooter + width
         if (clientShooter >= 100) {
-          //??? gameOver.style.display = 'block'
+       
           return clearInterval(clientShootingTimer)
         }
         cells[clientShooter].classList.add('tears')
-        // womanScream()
+      
         console.log(clientShooter)
         if (cells[clientShooter].classList.contains('poo')) {
-          
+
           cells[clientShooter].classList.add('blownup')
-          gameOverPage()
-          //  cells[clientShooter].classList.add('poo')
-          //  cells[clientShooter].classList.remove('blownup')
-          // gameOver.style.display = 'block'
-          // gameOverPage()
-          // clearInterval(clientShootingTimer)
-          console.log(clientShooter)
+          womanScream()
+          gameOverResult()
+         
+
           cells[clientShooter].classList.remove('poo')
           moneyMade.innerHTML = money
           money -= 1000
-          ///???????? dont know why it wont stop
+      
         }
-      }, 1000)
+      }, 100)
     }
 
-
-
-
-    const audio = document.querySelector('#myAudio')
-    // const womanScream = document.querySelector('#myAudio')
+ 
     function playSound() {
       audio.src = './audio/splooge.wav'
       audio.play()
     }
 
-    // function womanScream() {
-    //   audio.src = './audio/womanScream.mp3'
-    //   audio.play()
-    // }
+    function womanScream() {
+      audio.src = './audio/womanScream.mp3'
+      audio.play()
+    }
 
     function cashTill() {
       audio.src = './audio/cashSound.mp3'
       audio.play()
     }
     audio.addEventListener('keydown', playSound)
-    // playSound()
+
     // to fire bullets to take out the clients     
     function fireWeapon(e) {
       if (e.keyCode === 70) {
@@ -217,14 +224,12 @@ function init() {
             }
 
 
-            //////******** */
+            //turn ppl into money
             setTimeout(() => {
               cells[bullet].classList.add('cash')
             }, 50)
-           
+
             cells[bullet].classList.remove('fire')
-
-
 
             clients = clients.filter(client => {
               return client !== bullet
@@ -235,18 +240,18 @@ function init() {
             cells[bullet].classList.add('weapon')
           }
           if (clients.length === 0) {
-          gameOver()
+            winner()
 
           }
 
-        }, 100)
+        }, 200)
 
       }
     }
     window.addEventListener('keyup', fireWeapon)
 
-    //***********timer function is below**************
-     timerID = setInterval(clientsAttack, 600)
+    //***********for the clients attack function*************
+    timerID = setInterval(clientsAttack, 1000)
   }
   window.addEventListener('keydown', handleKeyDown)
 
@@ -271,8 +276,8 @@ function init() {
     cells[tube].classList.add('poo')
   }
 
-  
-  
+
+
   startButton.addEventListener('click', startGame)
 }
 window.addEventListener('DOMContentLoaded', init)
