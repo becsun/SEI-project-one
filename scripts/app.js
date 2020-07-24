@@ -1,5 +1,4 @@
 function init() {
-
   const startButton = document.querySelector('#start')
   const blurb = document.querySelector('.blurb')
   const grid = document.querySelector('.grid')
@@ -11,31 +10,47 @@ function init() {
   const backgroundColor = document.querySelector('.container-1')
 
 
+
+
+  restart.addEventListener('click',restartGame)
   //local storage for highest score
   const saveKeyStore = 'highScore'
   let highestScore = localStorage.getItem(saveKeyStore)
-  const cells = []
+  let cells = []
   const width = 10
   const numberOfCells = width * width
   //position of the colour tube
-
   let tube = 90
   // const clientsStart = 0
   let direction = 1
   let money = 1000
-
-
-
-
-
   // make the grid
 
-  function startGame() {
+
+  function restartGame(){
+    gameOver.style.display = 'none'
+    restart.style.display = 'none'
+    startGame()
+
+  }
+
+
+  function gameOverPage() {
+    gameOver.style.display = 'block'
+    restart.style.display = 'block'
+   
+  }
+
+ 
+  function gamePlayingPage(){
     startButton.style.display = 'none'
     blurb.style.display = 'none'
     heading.style.display = 'none'
     backgroundColor.style.backgroundColor = 'black'
+  }
 
+  function startGame() {
+    gamePlayingPage()
     for (let i = 0; i < numberOfCells; i++) {
       const cell = document.createElement('div')
       cells.push(cell)
@@ -43,37 +58,38 @@ function init() {
       // cell.innerHTML = i
       grid.appendChild(cell)
     }
-
     cells[tube].classList.add('poo')
-
     //bullets
-
-
-
     //making all the clients
     let clients = [0, 1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 14, 15, 16, 20, 21, 22, 23, 24, 25, 26, 30, 31, 32, 33, 34, 35, 36, 40, 41, 42, 43, 44, 45, 46]
     console.log(clients)
-
     const groupedClients = clients.forEach(client => {
       cells[client].classList.add('fire')
     })
     //testing the layout
-
     // move clients
-    clientsAttack()
+   
 
 
+  
 
-    function gameOverPage() {
-      grid.style.display = 'none'
-      gameOver.style.display = 'inline'
+    function findRightEdge(array, size) {
+      rightEdgeValue = array[0]
+      for (let i = 1; i <= size; i++) {
+        if (Math.floor(array[0] / width) !== Math.floor(array[i] / width)) {
+          return rightEdgeValue
+        } else {
+          rightEdgeValue = array[i]
+        }
+      }
+      return rightEdgeValue
     }
 
-
+ 
     function clientsAttack() {
       //boolean to check if clients at left or right edge
       const leftEdge = clients[0] % width === 0
-      const rightEdge = clients[clients.length - 1] % width === width - 1
+      const rightEdge = findRightEdge(clients, 6) % width === width - 1
       //condition if clients touched the edge of the grid, therefor move down
       if ((leftEdge && direction === -1) || (rightEdge && direction === 1)) {
         // to move down, set direction equals to width
@@ -90,11 +106,9 @@ function init() {
         //move left
         else direction = -1
       }
-
       // remove fire from the cells
       for (let i = 0; i <= clients.length - 1; i++) {
         cells[clients[i]].classList.remove('fire')
-
       }
       // add direction to clients to make them move
       for (let i = 0; i <= clients.length - 1; i++) {
@@ -103,65 +117,54 @@ function init() {
       // add fire to cells
       for (let i = 0; i <= clients.length - 1; i++) {
         cells[clients[i]].classList.add('fire')
+        
       }
-
       clients.some(client => {
         if (client >= (width * 10)) {
-
-          clearInterval(timerID)
           clients.forEach(client => {
             cells[client].classList.remove('fire')
-
-            // return clearInterval(timerID)
-
+            clearInterval(timerID)
+          
           })
-          gameOver.style.display = 'block'
+          // need to end the game
+          gameOverPage()
         }
+
       })
-
-
       clientFire()
     }
-
-
-
-
-
-
+ 
     function clientFire() {
-
       // let clientShooter = clients
       const availiableShooters = clients.slice(clients.length - 6)
-
       let clientShooter = availiableShooters[Math.floor(Math.random() * availiableShooters.length)]
       console.log(availiableShooters)
       cells[clientShooter].classList.add('tears')
       const clientShootingTimer = setInterval(() => {
-
         cells[clientShooter].classList.remove('tears')
         clientShooter = clientShooter + width
         if (clientShooter >= 100) {
-
           //??? gameOver.style.display = 'block'
           return clearInterval(clientShootingTimer)
-
         }
         cells[clientShooter].classList.add('tears')
-
+        // womanScream()
         console.log(clientShooter)
         if (cells[clientShooter].classList.contains('poo')) {
-          gameOver.style.display = 'block'
+          
+          cells[clientShooter].classList.toggle('blownup')
+          //  cells[clientShooter].classList.add('poo')
+          //  cells[clientShooter].classList.remove('blownup')
+          // gameOver.style.display = 'block'
+          // gameOverPage()
           clearInterval(clientShootingTimer)
           console.log(clientShooter)
           cells[clientShooter].classList.remove('poo')
           moneyMade.innerHTML = money
           money -= 1000
-
           ///???????? dont know why it wont stop
-
         }
       }, 1000)
-
     }
 
 
@@ -169,17 +172,15 @@ function init() {
 
     const audio = document.querySelector('#myAudio')
     // const womanScream = document.querySelector('#myAudio')
-
-
     function playSound() {
       audio.src = './audio/splooge.wav'
       audio.play()
     }
 
-    function womanScream() {
-      audio.src = './audio/womanScream.mp3'
-      audio.play()
-    }
+    // function womanScream() {
+    //   audio.src = './audio/womanScream.mp3'
+    //   audio.play()
+    // }
 
     function cashTill() {
       audio.src = './audio/cashSound.mp3'
@@ -194,7 +195,6 @@ function init() {
         let bullet = tube
         //  - width
         let client
-
         cells[bullet].classList.add('weapon')
         let shootingBullet = setInterval(() => {
           cells[bullet].classList.remove('weapon')
@@ -206,14 +206,15 @@ function init() {
             cashTill()
             moneyMade.innerHTML = money
             money += 1000
-
             //check high score
             highScore.innerHTML = highestScore
             if (money > highestScore) {
               highestScore = money
               localStorage.setItem(saveKeyStore, highestScore)
             }
-            ////???? make the money disappear
+
+
+            //////******** */
             cells[bullet].classList.add('cash')
             cells[bullet].classList.remove('fire')
 
@@ -222,39 +223,27 @@ function init() {
             clients = clients.filter(client => {
               return client !== bullet
             })
+
             clearInterval(shootingBullet)
           } else {
             cells[bullet].classList.add('weapon')
           }
           if (clients.length === 0) {
             console.log('game over')
+
           }
+
         }, 100)
 
       }
-
-
-
     }
-
-
     window.addEventListener('keyup', fireWeapon)
-
-
     //***********timer function is below**************
     const timerID = setInterval(clientsAttack, 1000)
-
-
-
-
-
-
   }
   window.addEventListener('keydown', handleKeyDown)
 
-
   function handleKeyDown(e) {
-
     cells[tube].classList.remove('poo')
     switch (e.keyCode) {
       //RIGHT
@@ -273,15 +262,10 @@ function init() {
         break
     }
     cells[tube].classList.add('poo')
-
-
-
-
   }
 
-
-  restart.addEventListener('click', startGame)  
+  
+  
   startButton.addEventListener('click', startGame)
-
 }
 window.addEventListener('DOMContentLoaded', init)

@@ -4,7 +4,9 @@
 body {
   height: 100vh;
   margin: 0;
-  background-image: url("https://thumbs.dreamstime.com/b/background-dribble-green-slime-flowing-sticky-liquid-melted-paint-drips-flowing-vector-halloween-illustration-toxic-78896741.jpg");
+  background-image: url('../images/background.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 header{
   position: absolute;
@@ -14,11 +16,16 @@ h1{
 padding-left:30px;
 font-family: 'Rowdies', cursive;
 padding-right: 40px;
+
 }
 h2{
   font-family: 'Rowdies', cursive;
   font-size: 50px;
-  align-content: center;
+  /* align-content:flex-start; */
+  position: relative;
+animation: slide 2s infinite;
+animation-direction: alternate;
+margin-left: 0px;
  
 }
 .grid-wrapper {
@@ -71,6 +78,7 @@ h2{
 }
 .money{
   background-image: url('../images/money.png');
+  background-repeat: no-repeat;
 }
 
 header{
@@ -115,9 +123,6 @@ header{
  margin-left: 100px;
 }
 
-#money-display{
-  background-image: url('../images/Cash.png');
-}
 
 .tears{
   background-image: url('../images/Tear-Three.png');
@@ -164,9 +169,19 @@ button {
 
 }
 
-.restart{
+body .restart{
  padding-top: -100px;
  display: block;
  position: absolute;
  margin-bottom: 0px;
+}
+
+@keyframes slide {
+  from {left: -300px;}
+  to {left: 300px;}
+  
+}
+.blownup {
+background-image: url(../images/Boom.png);
+background-repeat: no-repeat;
 }
