@@ -112,6 +112,7 @@ header{
   background-repeat: no-repeat;
   width: 1000px;
  background-color: yellow;
+ margin-left: 100px;
 }
 
 #money-display{
@@ -127,7 +128,7 @@ header{
 
 .cash{
   background-image: url('../images/Cash.png');
-  background-repeat: no-repeat;
+    background-repeat: no-repeat;
   background-size: 50%;
   background-position: center;
 }
@@ -149,29 +150,23 @@ header{
  padding-top: 0px;
  color :yellow;
 
-  /* animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  perspective: 1000px;
 }
 
-@keyframes shake {
-  10%, 90% {
-    transform: translate3d(-1px, 0, 0);
-  }
-  
-  20%, 80% {
-    transform: translate3d(2px, 0, 0);
-  }
+button {
+  background-color: yellowgreen;
+  font-family: 'Rowdies', cursive;
+  font-size: 20px;
+  padding: 14px 40px;
+  border-radius: 4px;
+  transition-duration: 6s;
+  cursor: pointer;
+  border: 2px solid #555555;
 
-  30%, 50%, 70% {
-    transform: translate3d(-4px, 0, 0);
-  }
-
-  40%, 60% {
-    transform: translate3d(4px, 0, 0);
-  }
 }
 
-
-
+.restart{
+ padding-top: -100px;
+ display: block;
+ position: absolute;
+ margin-bottom: 0px;
+}

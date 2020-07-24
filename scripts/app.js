@@ -61,12 +61,10 @@ function init() {
 
     // move clients
     clientsAttack()
-    
-    function restart() {
 
-    }
 
-    function gameOverPage(){
+
+    function gameOverPage() {
       grid.style.display = 'none'
       gameOver.style.display = 'inline'
     }
@@ -96,7 +94,7 @@ function init() {
       // remove fire from the cells
       for (let i = 0; i <= clients.length - 1; i++) {
         cells[clients[i]].classList.remove('fire')
-       
+
       }
       // add direction to clients to make them move
       for (let i = 0; i <= clients.length - 1; i++) {
@@ -109,13 +107,13 @@ function init() {
 
       clients.some(client => {
         if (client >= (width * 10)) {
-     
+
           clearInterval(timerID)
           clients.forEach(client => {
             cells[client].classList.remove('fire')
-     
+
             // return clearInterval(timerID)
-          
+
           })
           gameOver.style.display = 'block'
         }
@@ -123,9 +121,6 @@ function init() {
 
 
       clientFire()
-
-
-
     }
 
 
@@ -146,13 +141,13 @@ function init() {
         cells[clientShooter].classList.remove('tears')
         clientShooter = clientShooter + width
         if (clientShooter >= 100) {
-         
+
           //??? gameOver.style.display = 'block'
           return clearInterval(clientShootingTimer)
-          
+
         }
         cells[clientShooter].classList.add('tears')
-        // womanScream()
+
         console.log(clientShooter)
         if (cells[clientShooter].classList.contains('poo')) {
           gameOver.style.display = 'block'
@@ -165,7 +160,7 @@ function init() {
           ///???????? dont know why it wont stop
 
         }
-      }, 500)
+      }, 1000)
 
     }
 
@@ -220,10 +215,10 @@ function init() {
             }
             ////???? make the money disappear
             cells[bullet].classList.add('cash')
-            cells[bullet].classList.remove('fire') 
-           
-         
-           
+            cells[bullet].classList.remove('fire')
+
+
+
             clients = clients.filter(client => {
               return client !== bullet
             })
@@ -285,7 +280,8 @@ function init() {
   }
 
 
-
+  restart.addEventListener('click', startGame)  
   startButton.addEventListener('click', startGame)
+
 }
 window.addEventListener('DOMContentLoaded', init)
