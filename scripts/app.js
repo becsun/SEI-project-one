@@ -105,11 +105,11 @@ function init() {
       // eslint-disable-next-line brace-style
       }
       // if above is false, then code below which is
-      // means direction is equal to width, therefor needs to be change to move right or left  
+      // means direction is equal to width, therefor needs to be change to move right or left
       else if (direction === width) {
         // if clients are on the leftedge, move right, means direction +1
         if (leftEdge === true) {
-          // move right 
+          // move right
           direction = 1
         }
         //move left
@@ -160,28 +160,28 @@ function init() {
         cells[clientShooter].classList.remove('tears')
         clientShooter = clientShooter + width
         if (clientShooter >= 100) {
-       
+
           return clearInterval(clientShootingTimer)
         }
         cells[clientShooter].classList.add('tears')
-      
+
         console.log(clientShooter)
         if (cells[clientShooter].classList.contains('poo')) {
           womanScream()
           cells[clientShooter].classList.add('blownup')
- 
+
           gameOverResult()
-         
+
 
           cells[clientShooter].classList.remove('poo')
           moneyMade.innerHTML = money
           money -= 1000
-      
+
         }
       }, 50)
     }
 
- 
+
     function playSound() {
       audio.src = './audio/splooge.wav'
       audio.play()
@@ -198,7 +198,7 @@ function init() {
     }
     audio.addEventListener('keydown', playSound)
 
-    // to fire bullets to take out the clients     
+    // to fire bullets to take out the clients
     function fireWeapon(e) {
       if (e.keyCode === 70) {
         e.preventDefault()
