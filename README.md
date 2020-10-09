@@ -143,3 +143,6 @@ Happy with what I had accomplished for my first project after 3 weeks into the c
 From this experience i would definitely make sure that next time i would take the time to ****break the project down into different components**** (data, presentation, views, style, DOM manipulation) and map out the details for each component individually. 
 
 Not to be afraid of writing code that i will remove later. It's all part of building the applications. The code will help get me to the the next step.
+
+
+https://becsun.github.io/SEI-project-one/
