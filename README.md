@@ -90,19 +90,29 @@ The concepts of my game is to shoot the hair 'goo' at the the on coming people b
 ## :pencil: Process
 
 I started planning out the steps I needed in order for this game to work and be complete. I set myself a time line for my MVP and wrote down all the main functionalities i needed for the game:
-- People forward while moving side to side with random tears.
-- Hand moving side to side, while being able to shoot "goo"
-- People turning into a money bill when then were hit by goo
+- People moving forward while also moving side to side with random tears streaming.
+- Player (Hand) moving side to side, while being able to shoot "goo".
+- People turning into a money bill when then were hit but also disappearing after.
+- Sound effects
 - Scoreboard
+- Win/Lose outcome
 - Reset and restart the game.
 
 These fuctionalities were then broken down even further through pseudocoding.
 
+
+##
+ The grid was the foundation for me to work out how the people and also how the player can move around the page.
+
+![function](readmeAssets/grid.png)
+##
+The code snippet below is for when a person is hit with the "goo" they would change to a money bill, and then change again to an empty grid.
+![function](readmeAssets/changeToMoney.png)
+##
 ![function](readmeAssets/goo-funtion.png)
-
 <br>
+This code snippet if for the clients moving to the edge of the page and returning back to the other side. Took me a while to figure this out.
 
-This function snippet if for the clients moving to the edge of the page and returning back to the other side. Took me a while to figure this out.
 
 
   
