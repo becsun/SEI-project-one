@@ -138,7 +138,7 @@ As the layout is set as a grid, it took me a bit of time to work out how to move
 
 Happy with what I had accomplished for my first project after 3 weeks into the course. Was an achievement to have a worked alone and ended with although a little buggy, a working game. Enjoyed the overall experience.
 
-## :bulb: Key Learning
+## :bulb: Key Learnings
 
 From this experience i would definitely make sure that next time i would take the time to ****break the project down into different components**** (data, presentation, views, style, DOM manipulation) and map out the details for each component individually. 
 
