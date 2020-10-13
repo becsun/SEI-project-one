@@ -11,17 +11,15 @@ function init() {
   const result = document.querySelector('.winner')
   const audio = document.querySelector('#myAudio')
 
-
   restart.addEventListener('click', restartGame)
   //local storage for highest score
   const saveKeyStore = 'highScore'
   let highestScore = localStorage.getItem(saveKeyStore)
-  let cells = []
+  const cells = []
   const width = 10
   const numberOfCells = width * width
   //position of the colour tube
   let tube = 90
-  // const clientsStart = 0
   let direction = 1
   let money = 1000
   let clientShootingTimer
@@ -29,9 +27,6 @@ function init() {
   let rightEdgeValue
 
   // make the grid
-
-
-
   function gameOverResult() {
     gameOver.style.display = 'block'
     restart.style.display = 'block'
@@ -41,7 +36,6 @@ function init() {
 
   function restartGame() {
     window.location.reload()
-
   }
 
   function gamePlayingPage() {
@@ -60,25 +54,20 @@ function init() {
     clearInterval(clientShootingTimer)
   }
 
-
   function startGame() {
     gamePlayingPage()
 
     for (let i = 0; i < numberOfCells; i++) {
       const cell = document.createElement('div')
       cells.push(cell)
-      //maybe delete the i later
       grid.appendChild(cell)
     }
     cells[tube].classList.add('poo')
-    //bullets
-    //making all the clients
     let clients = [0, 1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 14, 15, 16, 20, 21, 22, 23, 24, 25, 26, 30, 31, 32, 33, 34, 35, 36, 40, 41, 42, 43, 44, 45, 46]
     console.log(clients)
     clients.forEach(client => {
       cells[client].classList.add('fire')
     })
-
 
     function findRightEdge(array, size) {
       rightEdgeValue = array[0]
@@ -92,30 +81,18 @@ function init() {
       return rightEdgeValue
     }
 
-
     function clientsAttack() {
-
-      //boolean to check if clients at left or right edge
       const leftEdge = clients[0] % width === 0
       const rightEdge = findRightEdge(clients, 6) % width === width - 1
-      //condition if clients touched the edge of the grid, therefor move down
       if ((leftEdge && direction === -1) || (rightEdge && direction === 1)) {
-        // to move down, set direction equals to width
         direction = width
-      // eslint-disable-next-line brace-style
       }
-      // if above is false, then code below which is
-      // means direction is equal to width, therefor needs to be change to move right or left
       else if (direction === width) {
-        // if clients are on the leftedge, move right, means direction +1
         if (leftEdge === true) {
-          // move right
           direction = 1
-        }
-        //move left
-        else direction = -1
+        }  else direction = -1
       }
-      // remove fire from the cells
+
       for (let i = 0; i <= clients.length - 1; i++) {
         cells[clients[i]].classList.remove('fire')
       }
@@ -126,7 +103,6 @@ function init() {
       // add fire to cells
       for (let i = 0; i <= clients.length - 1; i++) {
         cells[clients[i]].classList.add('fire')
-
       }
       clients.some(client => {
         if (client >= (width * 10)) {
@@ -134,21 +110,14 @@ function init() {
           clearInterval(timerID)
           clients.forEach(client => {
             cells[client].classList.remove('fire')
-
             clearInterval(timerID)
-
           })
-          // need to end the game
           gameOverResult()
           clearInterval(timerID)
         }
-
       })
-      //for the clients to shoot
       clientFire()
-
     }
-
 
     function clientFire() {
       // let clientShooter = clients
@@ -160,27 +129,20 @@ function init() {
         cells[clientShooter].classList.remove('tears')
         clientShooter = clientShooter + width
         if (clientShooter >= 100) {
-
           return clearInterval(clientShootingTimer)
         }
         cells[clientShooter].classList.add('tears')
-
         console.log(clientShooter)
         if (cells[clientShooter].classList.contains('poo')) {
           womanScream()
           cells[clientShooter].classList.add('blownup')
-
           gameOverResult()
-
-
           cells[clientShooter].classList.remove('poo')
           moneyMade.innerHTML = money
           money -= 1000
-
         }
       }, 50)
     }
-
 
     function playSound() {
       audio.src = './audio/splooge.wav'
@@ -197,16 +159,14 @@ function init() {
       audio.play()
     }
     audio.addEventListener('keydown', playSound)
-
     // to fire bullets to take out the clients
     function fireWeapon(e) {
       if (e.keyCode === 70) {
         e.preventDefault()
         playSound()
         let bullet = tube
-        let client
         cells[bullet].classList.add('weapon')
-        let shootingBullet = setInterval(() => {
+        const shootingBullet = setInterval(() => {
           cells[bullet].classList.remove('weapon')
           bullet = bullet - width
           if (bullet < 0) {
@@ -222,30 +182,22 @@ function init() {
               highestScore = money
               localStorage.setItem(saveKeyStore, highestScore)
             }
-
-
             //turn ppl into money
             setTimeout(() => {
               cells[bullet].classList.add('cash')
-            }, 50)
-
+            }, 5)
             cells[bullet].classList.remove('fire')
-
             clients = clients.filter(client => {
               return client !== bullet
             })
-
             clearInterval(shootingBullet)
           } else {
             cells[bullet].classList.add('weapon')
           }
           if (clients.length === 0) {
             winner()
-
           }
-
-        }, 200)
-
+        }, 300)
       }
     }
     window.addEventListener('keyup', fireWeapon)
@@ -264,7 +216,7 @@ function init() {
           tube++
         }
         break
-        //LEFT
+      //LEFT
       case 37:
         if (tube % width !== 0) {
           tube--
@@ -275,8 +227,6 @@ function init() {
     }
     cells[tube].classList.add('poo')
   }
-
-
 
   startButton.addEventListener('click', startGame)
 }
